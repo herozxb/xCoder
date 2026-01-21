@@ -16,7 +16,7 @@ class RecursiveHTMLAgent:
 
     def generate_part_tool(self, part_number, plan):
         print(f"  [Agent Generating Part {part_number}]")
-        prompt = f"Based on this plan: {plan}\n\nWrite only the HTML/CSS for step {part_number}. No talk, no markdown.Generate HTML/CSS for the hero section. The hero section should include: A background image with a text overlay. Heading ('Welcome to Our Product') and a subheading with a call-to-action ('Learn More' button). The button should change color on hover. the background is change litte with time, and the footer input the company name happy search, and address in the USA, Ensure the section is responsive with padding on small screens."
+        prompt = f"Based on this plan: {plan}\n\nWrite only the HTML/CSS for step {part_number}. No talk, no markdown.Generate HTML/CSS for the hero section. The hero section should include: A background image with a text overlay. Heading ('Welcome to Our Product') and a subheading with a call-to-action ('Learn More' button). The button should change color on hover. and hero section background is changing color with time. Ensure the section is responsive with padding on small screens."
         response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
         return response['message']['content']
 

@@ -14,7 +14,7 @@ class SimpleMLP(nn.Module):
     
     def forward(self, x):
         x = torch.relu(self.fc1(x))  # Apply ReLU after first layer
-        x = self.fc2(x)  # Output layer
+        x = torch.relu(self.fc2(x))  # Output layer
         return x
 
 
@@ -81,7 +81,7 @@ criterion = nn.BCEWithLogitsLoss()  # Binary Cross-Entropy loss
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Train the model
-num_epochs = 100000
+num_epochs = 10000
 for epoch in range(num_epochs):
     optimizer.zero_grad()
     output = model(X_train)  # Forward pass
@@ -112,7 +112,7 @@ predictions = predictions.reshape(xx.shape)
 
 # Plot the heatmap
 plt.figure(figsize=(8, 6))
-plt.contourf(xx, yy, predictions, levels=np.linspace(0, 2000, 100), cmap='coolwarm')
+plt.contourf(xx, yy, predictions, levels=np.linspace(0, 100, 100), cmap='coolwarm')
 plt.colorbar()
 plt.title("MLP Output Heatmap")
 plt.xlabel("x")

@@ -14,70 +14,53 @@
         }
         .hero {
             position: relative;
-            height: 100vh; /* Full viewport height */
-            background-image: url('robot_dancing.jpg');
-            background-size: cover;
+            width: 100%;
+            height: 100vh; /* Adjust based on your needs */
+            background: linear-gradient(to right, #ff6a00, #ee0979);
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .hero-content {
-            position: relative;
             text-align: center;
-            z-index: 2;
+            transition: background 1s ease; /* Smooth transition for background color */
         }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 0.5em;
         }
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 2em;
         }
         .cta-button {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
+            padding: 0.75em 1.5em;
+            font-size: 1em;
             color: white;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.3);
             border: none;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .cta-button:hover {
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(255, 255, 255, 0.6);
         }
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .hero h1 {
+                font-size: 2em;
             }
-            h2 {
-                font-size: 1.25rem;
-            }
-            .cta-button {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+            .hero p {
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
     <div class="hero">
-        <div class="overlay"></div>
-        <div class="hero-content">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;">
             <h1>Welcome to Our Product</h1>
-            <h2>Discover the magic of robotic dance!</h2>
-            <button class="cta-button" onclick="window.location.href='learn_more.html'">Learn More</button>
+            <p>Discover the magic of our robotic dancer!</p>
+            <button class="cta-button" onclick="window.location.href='#about'">Learn More</button>
         </div>
     </div>
 </body>
@@ -89,37 +72,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Our Product</title>
+    <title>RoboDance Showcase</title>
     <style>
-        body, html {
+        body {
             margin: 0;
-            padding: 0;
-            height: 100%;
             font-family: Arial, sans-serif;
         }
         .hero {
             position: relative;
-            background-image: url('robot_background.jpg');
-            background-size: cover;
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
+            height: 100vh; /* Full viewport height for the hero section */
+            background-color: #3498db; /* Initial background color */
+            transition: background-color 5s ease; /* Smooth transition for background color */
         }
-        .overlay {
+        .hero::before {
+            content: '';
             position: absolute;
             top: 0;
-            bottom: 0;
             left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            background-image: url('robot-dancing.jpg'); /* Replace with actual image URL */
+            background-size: cover;
+            filter: blur(5px); /* Adjust the blur intensity as needed */
         }
-        .content {
-            position: relative;
-            z-index: 1;
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
         }
         h1 {
             font-size: 2.5em;
-            margin-bottom: 10px;
+            margin-bottom: 0.5em;
         }
         p {
             font-size: 1.2em;
@@ -128,20 +114,153 @@
             display: inline-block;
             padding: 10px 20px;
             margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white for the button */
             color: white;
-            background-color: #3498db;
             text-decoration: none;
-            border-radius: 5px;
+            border: 1px solid white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: white; /* Change to white on hover */
+            color: black; /* Text color changes with button color */
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Our Product</h1>
+            <p>Watch RoboDance in Action!</p>
+            <a href="#more" class="cta-button">Learn More</a>
+        </div>
+    </div>
+</body>
+</html>
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoboDance Showcase</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .hero {
+            position: relative;
+            height: 100vh; /* Full viewport height */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('robot_dance.jpg');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.5em;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .cta-button:hover {
-            background-color: #2ecc71;
+            background-color: rgba(255, 0, 0, 0.8);
         }
+        /* Responsive design */
         @media (max-width: 600px) {
-            h1 {
+            .hero h1 {
                 font-size: 2em;
             }
-            p {
+            .hero p {
+                font-size: 1em;
+            }
+            .cta-button {
+                padding: 5px 10px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Welcome to Our Product</h1>
+        <p>Experience the Future of Robotic Dance!</p>
+        <button class="cta-button" onclick="location.href='#about'">Learn More</button>
+    </div>
+</body>
+</html>
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoboDance</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .hero {
+            position: relative;
+            background-image: url('robot_dancing.jpg');
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            transition: background-color 0.5s ease;
+        }
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: rgba(0, 128, 0, 0.7);
+            transform: scale(1.1);
+        }
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero p {
                 font-size: 1em;
             }
             .cta-button {
@@ -151,150 +270,13 @@
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="overlay"></div>
-        <div class="content">
+    <section class="hero">
+        <div>
             <h1>Welcome to Our Product</h1>
-            <p>Discover the magic of robotics in action!</p>
-            <a href="#" class="cta-button">Learn More</a>
+            <p>Watch RoboDance in Action!</p>
+            <a href="#about" class="cta-button">Learn More</a>
         </div>
-    </div>
-</body>
-</html>
-
- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Our Product</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .hero {
-            position: relative;
-            background-image: url('robot_dance.jpg');
-            background-size: cover;
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .hero h1 {
-            font-size: 3em;
-            margin: 0;
-        }
-        .hero p {
-            font-size: 1.2em;
-        }
-        .cta-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1em;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .cta-button:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-    </style>
-</head>
-<body>
-    <div class="hero">
-        <div class="overlay"></div>
-        <h1>Welcome to Our Product</h1>
-        <p>Discover the magic of our robot dancer!</p>
-        <a href="#" class="cta-button">Learn More</a>
-    </div>
-    <footer>
-        <p>Company Name Happy Search, Address in the USA</p>
-    </footer>
-</body>
-</html>
-
- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Page</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: white;
-        }
-        .hero {
-            position: relative;
-            height: 100vh;
-            background-image: url('robot_dance.jpg');
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .content {
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 0.5em;
-        }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 1.5em;
-        }
-        .cta-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1em;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .cta-button:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-    </style>
-</head>
-<body>
-    <div class="hero">
-        <div class="overlay"></div>
-        <div class="content">
-            <h1>Welcome to Our Product</h1>
-            <p>Discover the magic of robotic dance!</p>
-            <a href="#" class="cta-button">Learn More</a>
-        </div>
-    </div>
+    </section>
 </body>
 </html>
 
@@ -310,67 +292,73 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: Arial, sans-serif;
+            overflow: hidden;
         }
-        .hero {
+        .hero-section {
             position: relative;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
             background-image: url('robot_dancing.jpg');
             background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
             text-align: center;
-            padding: 10% 20%;
-            transition: background-color 1s ease;
+            transition: background-color 1s ease; /* Smooth background color transition */
         }
-        .overlay {
+        .text-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .content {
-            position: relative;
-            z-index: 2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
         }
         h1 {
             font-size: 3em;
-            margin-bottom: 0.5em;
+            margin-bottom: 10px;
         }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 1.5em;
+        h2 {
+            font-size: 1.5em;
+            margin-top: 0;
         }
         .cta-button {
             display: inline-block;
             padding: 10px 20px;
-            font-size: 1em;
+            margin-top: 20px;
+            background-color: #007BFF; /* Default button color */
             color: white;
-            background-color: rgba(0, 0, 0, 0.5);
             text-decoration: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions on hover and click */
         }
         .cta-button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: #0056b3; /* Darker color on hover */
+            transform: scale(1.05); /* Slightly larger size on hover */
         }
-        @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            p { font-size: 1em; }
-            .hero { padding: 20% 5%; }
+        @media (max-width: 768px) {
+            .text-overlay {
+                width: 90%;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="overlay"></div>
-        <div class="content">
+    <div class="hero-section" id="home">
+        <div class="text-overlay">
             <h1>Welcome to Our Product</h1>
-            <p>Discover the magic of robotics in motion!</p>
-            <a href="#learn-more" class="cta-button">Learn More</a>
+            <h2>Discover the Magic of RoboDance!</h2>
+            <a href="#about" class="cta-button">Learn More</a>
         </div>
     </div>
-    <!-- Additional content for "Learn More" section can be added here -->
 </body>
 </html>
 
