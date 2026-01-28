@@ -2,16 +2,64 @@ import webbrowser
 import os
 import ollama
 import re
+import time
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 class RecursiveHTMLAgent:
     def __init__(self, model_name):
         self.model_name = model_name
         self.parts = {}
 
+    def _safe_ollama_call(self, prompt: str, operation_name: str, timeout: int = 180, max_retries: int = 5) -> str:
+        """
+        Safe wrapper for ollama calls with retry logic and timeout handling.
+        
+        Args:
+            prompt: The prompt to send to the model
+            operation_name: Name of the operation for logging
+            timeout: Timeout in seconds for each attempt (default 180s / 3 minutes)
+            max_retries: Maximum number of retry attempts (default 5)
+        
+        Returns:
+            The response content from ollama
+        """
+        for attempt in range(max_retries):
+            try:
+                logger.info(f"Attempt {attempt + 1}/{max_retries} for {operation_name}")
+                
+                # Add timeout to the ollama call
+                response = ollama.chat(
+                    model=self.model_name, 
+                    messages=[{"role": "user", "content": prompt}],
+                    timeout=timeout
+                )
+                logger.info(f"Successfully completed {operation_name}")
+                return response['message']['content']
+                
+            except Exception as e:
+                logger.warning(f"Attempt {attempt + 1} failed for {operation_name}: {str(e)}")
+                
+                if attempt == max_retries - 1:
+                    logger.error(f"All {max_retries} attempts failed for {operation_name}")
+                    raise Exception(f"Failed to complete {operation_name} after {max_retries} attempts: {str(e)}")
+                
+                # Wait before retrying (exponential backoff)
+                wait_time = (2 ** attempt) + (attempt * 0.5)
+                logger.info(f"Waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+        
+        # This should never be reached, but just in case
+        raise Exception(f"Unexpected error in {operation_name}")
+
     def plan_tool(self, task_description):
         """
         Enhanced planning tool that creates a structured 5-part plan for web page development.
         Each part corresponds to a specific component of the web page architecture.
+        Includes timeout handling and retry logic.
         """
         print(f"  [Agent Planning: {task_description}]")
         
@@ -70,13 +118,13 @@ class RecursiveHTMLAgent:
         Create the 5-part plan for: {task_description}
         """
         
-        response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
-        return response['message']['content']
+        return self._safe_ollama_call(prompt, "plan_tool")
 
     def generate_part_tool(self, part_number, plan):
         """
         Enhanced prompt generation for creating specific parts of a web page.
         Uses structured prompting to ensure high-quality, consistent output.
+        Includes timeout handling and retry logic.
         """
         print(f"  [Agent Generating Part {part_number}]")
         
@@ -109,8 +157,7 @@ class RecursiveHTMLAgent:
         Generate the code for Part {part_number}:
         """
         
-        response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
-        return response['message']['content']
+        return self._safe_ollama_call(prompt, f"generate_part_{part_number}")
 
     # --- NEW LLM-BASED DEBUG TOOL ---
     def debug_tool(self, code):
@@ -126,9 +173,7 @@ class RecursiveHTMLAgent:
         {code}
         """
         
-        response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
-        review = response['message']['content'].strip()
-        return review
+        return self._safe_ollama_call(prompt, "debug_tool")
 
     def run_recursive_logic(self, goal):
         # 1. Plan
@@ -149,25 +194,33 @@ class RecursiveHTMLAgent:
             # Recursively call the generator with the feedback to fix it
             print("  [Attempting automatic fix...]")
             prompt = f"Fix this HTML based on this feedback: {debug_feedback}\n\nHTML:\n{full_html}"
-            fix_response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
-            full_html = fix_response['message']['content']
+            fix_response = self._safe_ollama_call(prompt, "debug_fix")
+            full_html = fix_response
         else:
             print("  [Code Verified by LLM]")
 
         return full_html
 
     def execute(self, user_goal):
-        final_code = self.run_recursive_logic(user_goal)
-        
-        file_path = "llm_debugged_page.html"
-        with open(file_path, "w") as f:
-            # Clean up potential markdown formatting from LLM response
-            clean_code = final_code.replace("```html", "").replace("```", "")
-            f.write(clean_code)
-        
-        webbrowser.open(f"file://{os.path.realpath(file_path)}")
+        try:
+            final_code = self.run_recursive_logic(user_goal)
+            
+            file_path = "llm_debugged_page.html"
+            with open(file_path, "w") as f:
+                # Clean up potential markdown formatting from LLM response
+                clean_code = final_code.replace("```html", "").replace("```", "")
+                f.write(clean_code)
+            
+            webbrowser.open(f"file://{os.path.realpath(file_path)}")
+            print("Successfully generated and opened the web page!")
+            
+        except Exception as e:
+            logger.error(f"Error during execution: {str(e)}")
+            print(f"An error occurred: {str(e)}")
+            print("Please check your ollama server connection and try again.")
 
 # Start
-#agent = RecursiveHTMLAgent("qwen3-coder")
-agent = RecursiveHTMLAgent("deepseek-coder-v2")
-agent.execute("just show me a youtube.com front page")
+if __name__ == "__main__":
+    # Create agent with longer timeout and retry logic
+    agent = RecursiveHTMLAgent(model_name="qwen3-coder")
+    agent.execute("just show me a youtube.com front page")
