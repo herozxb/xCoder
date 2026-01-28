@@ -16,7 +16,7 @@ class RecursiveHTMLAgent:
 
     def generate_part_tool(self, part_number, plan):
         print(f"  [Agent Generating Part {part_number}]")
-        prompt = f"Based on this plan: {plan}\n\nWrite only the HTML/CSS for step {part_number}. No talk, no markdown.Generate HTML/CSS"
+        prompt = f"Based on this plan: {plan}\n\nWrite only the HTML/CSS for step {part_number}. No talk, no markdown."
         response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
         return response['message']['content']
 
@@ -26,7 +26,7 @@ class RecursiveHTMLAgent:
         print("  [LLM is inspecting the code for bugs...]")
         
         prompt = f"""
-        Act as a Senior Web Developer. Review the following HTML code for errors. No talk, no markdown.
+        Act as a Senior Web Developer. Review the following HTML code for errors.
         If the code is valid, respond with exactly: "VALID".
         If there are errors (missing tags, broken CSS, logic flaws), respond with "ERROR:" followed by a brief instruction on how to fix it.
         
@@ -41,14 +41,10 @@ class RecursiveHTMLAgent:
     def run_recursive_logic(self, goal):
         # 1. Plan
         full_plan = self.plan_tool(goal)
-        print("=================full_plan===================")
-        print(full_plan)
         
         # 2. Generate Parts
         for i in range(1, 6):
             self.parts[i] = self.generate_part_tool(i, full_plan)
-            print("=================[{i}]===================")
-            print(self.parts[i])
         
         # 3. Combine
         full_html = "<!DOCTYPE html>\n<html>\n" + "\n".join(self.parts.values()) + "\n</html>"
@@ -81,4 +77,4 @@ class RecursiveHTMLAgent:
 
 # Start
 agent = RecursiveHTMLAgent("deepseek-coder-v2")
-agent.execute("just show me baidu.com main page")
+agent.execute("just show me a login page")
