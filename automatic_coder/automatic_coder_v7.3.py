@@ -1,6 +1,7 @@
 import webbrowser
 import os
 import ollama
+import re
 
 class SimpleFrameAgent:
     def __init__(self, model_name):
@@ -33,6 +34,11 @@ TECHNICAL REQUIREMENTS:
 7. Use smooth transitions (e.g., transition: all 0.3s ease) for interactive elements.
 8. Apply focus and hover states for interactive elements.
 
+CODE QUALITY:
+- No explanatory text or comments
+- Production-ready code
+
+
 OUTPUT FORMAT:
 - Return ONLY the HTML structure with embedded <style> tags.
 - Ensure the HTML structure includes the necessary sections (header, main, footer, etc.).
@@ -41,9 +47,31 @@ OUTPUT FORMAT:
         # Send the prompt to the LLM model for generating HTML
         response = ollama.chat(model=self.model_name, messages=[{"role": "user", "content": prompt}])
         refined_html = response['message']['content']
-        print("==========refined_html============")
-        print(refined_html)        
-        return refined_html.strip()
+        refined_html = self._clean_generated_code(refined_html) 
+        return refined_html
+
+    def _clean_generated_code(self, code):
+        """
+        Cleans up common formatting issues from LLM-generated code.
+        """
+        # Remove markdown code blocks
+        code = re.sub(r'```html\s*', '', code)
+        code = re.sub(r'```\s*', '', code)
+        
+        # Remove common explanatory prefixes
+        code = re.sub(r'^(Here\'s|Here is|Here\'s the|The code|Code for).*?:\s*', '', code, flags=re.IGNORECASE | re.MULTILINE)
+        
+        # Remove leading/trailing whitespace but preserve structure
+        code = code.strip()
+        
+        # Ensure it starts with an HTML tag
+        if not code.strip().startswith('<'):
+            # Try to find first HTML tag
+            match = re.search(r'<[^>]+>', code)
+            if match:
+                code = code[match.start():]
+        
+        return code
 
     def execute(self, user_goal):
         plan = self.plan_tool(user_goal)
@@ -58,4 +86,4 @@ OUTPUT FORMAT:
 
 # Run the agent with a goal
 agent = SimpleFrameAgent("deepseek-coder-v2")
-agent.execute("just show me a baidu.com front page no sidebar")
+agent.execute("just show me a youtube.com front page with sidebar")

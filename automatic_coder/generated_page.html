@@ -1,70 +1,57 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baidu Front Page</title>
+    <title>YouTube Clone</title>
     <style>
         :root {
-            --primary-color: #333;
-            --secondary-color: #f2f2f2;
-            --accent-color: #ff6600;
-            --spacing: 1rem;
+            --primary: #ff0000;
+            --background: #f9f9f9;
+            --text-color: #333;
+            --spacing: 16px;
             --radius: 4px;
-            --font-family: 'Arial, sans-serif';
         }
 
-        body {
-            font-family: var(--font-family);
-            color: var(--primary-color);
+        body, html {
             margin: 0;
             padding: 0;
-            display: grid;
-            grid-template-areas:
-                "header header header"
-                "main main main"
-                "footer footer footer";
-            gap: var(--spacing);
+            font-family: Arial, sans-serif;
+            color: var(--text-color);
         }
 
         header {
-            grid-area: header;
-            background: var(--secondary-color);
-            padding: var(--spacing);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: var(--spacing);
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .header__logo {
+            height: 20px;
         }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
+        .header__search {
+            flex: 1;
+            margin: 0 var(--spacing);
         }
 
-        .search-bar input[type="text"] {
-            padding: calc(var(--spacing) / 2);
-            margin-right: var(--spacing);
-            border: 1px solid #ccc;
-            border-radius: var(--radius);
-        }
-
-        .actions button, .search-bar button {
-            padding: calc(var(--spacing) / 2) var(--spacing);
+        .header__actions button {
+            background: var(--background);
             border: none;
-            background: var(--accent-color);
-            color: white;
+            padding: 8px 16px;
             border-radius: var(--radius);
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header__actions button:hover {
+            background: #e5e5e5;
         }
 
         main {
-            grid-area: main;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: var(--spacing);
@@ -73,7 +60,7 @@
 
         .video-card {
             background: white;
-            border: 1px solid #ddd;
+            border-radius: var(--radius);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
@@ -82,53 +69,64 @@
             transform: translateY(-5px);
         }
 
-        .video-card img {
+        .video-card__thumbnail {
             width: 100%;
-            height: auto;
+            border-top-left-radius: var(--radius);
+            border-top-right-radius: var(--radius);
         }
 
-        .footer {
-            grid-area: footer;
-            background: var(--secondary-color);
+        .video-card__info {
             padding: var(--spacing);
-            text-align: center;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: var(--spacing);
+            background: #f2f2f2;
         }
 
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
-                align-items: start;
+                align-items: stretch;
             }
 
-            .search-bar input[type="text"] {
+            .header__search, .header__actions {
                 width: 100%;
-                margin-bottom: var(--spacing);
+                margin-top: var(--spacing);
             }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">Baidu</div>
-        <div class="search-bar">
+        <img src="https://www.youtube.com/yts/img/pixel-vfl3z5P0o.png" alt="YouTube Logo" class="header__logo">
+        <div class="header__search">
             <input type="text" placeholder="Search...">
-            <button>Search</button>
         </div>
-        <div class="actions">
+        <div class="header__actions">
             <button>Login</button>
-            <button>Register</button>
+            <button>Sign up</button>
         </div>
     </header>
-    <main class="main-content">
-        <!-- Video Cards will be dynamically inserted here -->
+    <main class="main">
+        <!-- Video cards go here -->
+        <article class="video-card">
+            <img src="https://via.placeholder.com/200" alt="Thumbnail" class="video-card__thumbnail">
+            <div class="video-card__info">
+                <h3>Video Title</h3>
+                <p>Channel Name</p>
+            </div>
+        </article>
     </main>
     <footer class="footer">
-        <a href="#">About Us</a> | 
-        <a href="#">Contact</a> | 
-        <a href="#">Privacy Policy</a>
+        <a href="#">About</a>
+        <a href="#">Press</a>
+        <a href="#">Copyright</a>
+        <a href="#">Contact</a>
+        <a href="#">Creators</a>
     </footer>
 </body>
 </html>
-```
-
-This HTML structure follows the provided plan and includes semantic HTML5 elements, CSS Grid for layout, mobile-first responsive design with media queries, and accessibility standards. The style is embedded within the `<style>` tags, following the specified requirements.
