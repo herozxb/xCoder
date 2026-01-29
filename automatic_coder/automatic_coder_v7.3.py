@@ -86,4 +86,4 @@ OUTPUT FORMAT:
 
 # Run the agent with a goal
 agent = SimpleFrameAgent("deepseek-coder-v2")
-agent.execute("just show me a youtube.com front page with sidebar")
+agent.execute("just show me a youtube.com front page with sidebar, make the logo from url of https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg")

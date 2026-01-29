@@ -6,127 +6,152 @@
     <title>YouTube Clone</title>
     <style>
         :root {
-            --primary: #ff0000;
-            --background: #f9f9f9;
-            --text-color: #333;
-            --spacing: 16px;
-            --radius: 4px;
+            --primary-color: #ff0000;
+            --secondary-color: #ffffff;
+            --background-color: #f9f9f9;
+            --text-color: #000000;
+            --link-color: #065fd4;
+            --spacing: 1rem;
+            --border-radius: 4px;
         }
 
-        body, html {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            color: var(--text-color);
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--spacing);
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: var(--spacing) calc(var(--spacing) * 2);
+            background-color: var(--secondary-color);
         }
 
-        .header__logo {
-            height: 20px;
+        .logo img {
+            height: 24px;
         }
 
-        .header__search {
-            flex: 1;
-            margin: 0 var(--spacing);
+        nav input[type="text"] {
+            width: 300px;
+            padding: calc(var(--spacing) / 2) var(--spacing);
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
         }
 
-        .header__actions button {
-            background: var(--background);
+        .actions button {
+            margin-left: var(--spacing);
+            padding: calc(var(--spacing) / 2) calc(var(--spacing));
             border: none;
-            padding: 8px 16px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background-color: #f0f0f0;
+            border-radius: var(--border-radius);
         }
 
-        .header__actions button:hover {
-            background: #e5e5e5;
+        .chips {
+            display: flex;
+            overflow-x: auto;
+            padding: var(--spacing) calc(var(--spacing) * 2);
+            background-color: var(--secondary-color);
+        }
+
+        .chip {
+            margin-right: var(--spacing);
+            padding: calc(var(--spacing) / 2) var(--spacing);
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            background-color: var(--background-color);
         }
 
         main {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: var(--spacing);
-            padding: var(--spacing);
+            padding: var(--spacing) calc(var(--spacing) * 2);
         }
 
         .video-card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
         }
 
-        .video-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .video-card__thumbnail {
+        .video-card img {
             width: 100%;
-            border-top-left-radius: var(--radius);
-            border-top-right-radius: var(--radius);
+            height: auto;
         }
 
-        .video-card__info {
+        .video-info {
             padding: var(--spacing);
+        }
+
+        .load-more {
+            display: flex;
+            justify-content: center;
+            padding: var(--spacing) calc(var(--spacing) * 2);
+            background-color: var(--secondary-color);
         }
 
         footer {
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: var(--spacing);
-            background: #f2f2f2;
+            padding: var(--spacing) calc(var(--spacing) * 2);
+            background-color: var(--secondary-color);
+        }
+
+        footer a {
+            color: var(--link-color);
+            text-decoration: none;
         }
 
         @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .header__search, .header__actions {
+            nav input[type="text"] {
                 width: 100%;
-                margin-top: var(--spacing);
             }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <img src="https://www.youtube.com/yts/img/pixel-vfl3z5P0o.png" alt="YouTube Logo" class="header__logo">
-        <div class="header__search">
-            <input type="text" placeholder="Search...">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube Logo">
         </div>
-        <div class="header__actions">
+        <nav>
+            <input type="text" placeholder="Search">
+        </nav>
+        <div class="actions">
             <button>Login</button>
             <button>Sign up</button>
         </div>
     </header>
-    <main class="main">
-        <!-- Video cards go here -->
+    <section class="chips">
+        <div class="chip">All</div>
+        <div class="chip">Music</div>
+        <div class="chip">Gaming</div>
+        <div class="chip">News</div>
+        <div class="chip">Sports</div>
+    </section>
+    <main class="main-grid">
         <article class="video-card">
-            <img src="https://via.placeholder.com/200" alt="Thumbnail" class="video-card__thumbnail">
-            <div class="video-card__info">
+            <img src="https://via.placeholder.com/200x150" alt="Video Thumbnail">
+            <div class="video-info">
                 <h3>Video Title</h3>
                 <p>Channel Name</p>
             </div>
         </article>
+        <!-- Repeat for other video cards -->
     </main>
-    <footer class="footer">
+    <div class="load-more">
+        <button>Load More</button>
+    </div>
+    <footer>
         <a href="#">About</a>
-        <a href="#">Press</a>
-        <a href="#">Copyright</a>
         <a href="#">Contact</a>
-        <a href="#">Creators</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
     </footer>
 </body>
 </html>
