@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>Frame</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --panel: #151515;
+    --border: #272727;
+    --text: #e5e5e5;
+    --muted: #9aa0a6;
+    --gap: 16px;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+  /* Part 1: Header */
+  .app-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: var(--gap); padding: 12px 16px; background: rgba(15,15,15,0.9); border-bottom: 1px solid var(--border); }
+  .header__left { width: 120px; display: flex; align-items: center; }
+  .header__center { flex: 1; display: flex; justify-content: center; }
+  .header__right { width: 160px; display: flex; justify-content: flex-end; gap: 10px; align-items: center; }
+
+  /* Part 2: Chips */
+  .chips { border-bottom: 1px solid var(--border); background: var(--bg); }
+  .chips__row { display: flex; gap: 10px; padding: 10px 16px; overflow: auto; scrollbar-width: none; }
+  .chips__row::-webkit-scrollbar { display: none; }
+
+  /* Part 3: Grid */
+  .content { padding: 16px; }
+  .grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+  /* Part 4: Pagination */
+  .pager { padding: 16px; display: flex; justify-content: center; }
+
+  /* Part 5: Footer */
+  .footer { border-top: 1px solid var(--border); padding: 16px; background: var(--bg); }
+  .footer__cols { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+</style>
+</head>
+<body>
+<header class="header">
+    <div class="logo header__logo"></div>
+    <nav class="search-bar header__search-bar">
+        <input type="text" class="search-bar__input search-bar__element--input" placeholder="Search..." />
+        <button class="search-bar__icon search-bar__element--icon icon-search"></button>
+        <button class="search-bar__icon search-bar__element--icon icon-mic"></button>
+    </nav>
+    <div class="actions header__actions">
+        <button class="action action--upload" aria-label="Upload"></button>
+        <button class="action action--more" aria-label="More options"></button>
+        <button class="action action--user" aria-label="User profile"></button>
+    </div>
+</header>
+
+<style>
+    :root {
+        --primary: #1a73e8;
+        --border: #ddd;
+        --text-color: #000;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+    }
+
+    .header__logo {
+        width: 80px;
+        height: auto;
+        background-image: url('https://www.youtube.com/yts/img/pixel-vfl3z5P0o.png');
+        background-size: cover;
+    }
+
+    .header__search-bar {
+        display: flex;
+        align-items: center;
+        max-width: 640px;
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+    }
+
+    .search-bar__input {
+        flex: 1;
+        margin-right: 0.5rem;
+        padding: 0.5rem;
+        font-size: 1rem;
+        outline: none;
+        border: none;
+    }
+
+    .search-bar__icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .search-bar__icon:hover,
+    .action:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .header__actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .action {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: transparent;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .action--upload {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 10h-3v5a3 3 0 0 1-6 0v-5H7c-1.1 0-2 .9-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8c0-1.1-.9-2-2-2z"/></svg>');
+        background-size: cover;
+    }
+
+    .action--more {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8l-6 6h12z"/></svg>');
+        background-size: cover;
+    }
+
+    .action--user {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/></svg>');
+        background-size: cover;
+    }
+</style>
+<nav class="chips-row">
+    <ul class="chips-row__list">
+        <li class="chips-row__item"><button class="chip" aria-label="Category 1">Category 1</button></li>
+        <li class="chips-row__item"><button class="chip" aria-label="Category 2">Category 2</button></li>
+        <li class="chips-row__item"><button class="chip" aria-label="Category 3">Category 3</button></li>
+        <li class="chips-row__item"><button class="chip" aria-label="Category 4">Category 4</button></li>
+        <li class="chips-row__item"><button class="chip" aria-label="Category 5">Category 5</button></li>
+    </ul>
+</nav>
+<style>
+    .chips-row {
+        display: flex;
+        gap: 16px;
+        overflow: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        padding: 16px;
+    }
+    .chips-row__list {
+        display: flex;
+        gap: 16px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .chips-row__item {
+        flex: 0 0 auto;
+    }
+    .chip {
+        padding: 8px 16px;
+        background: var(--panel);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    .chip:hover,
+    .chip:focus {
+        background: var(--primary);
+        color: white;
+    }
+</style>
+<main class="main-grid">
+    <style>
+        .main-grid {
+            display: grid;
+            gap: 16px;
+            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        }
+
+        .card {
+            background: var(--panel);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 600px) {
+            .main-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <article class="card">
+        <!-- Video Card Content -->
+    </article>
+    <article class="card">
+        <!-- Video Card Content -->
+    </article>
+    <article class="card">
+        <!-- Video Card Content -->
+    </article>
+    <!-- Add more articles for additional video cards -->
+</main>
+<main class="content">
+    <section class="pagination">
+        <button aria-label="Load More" class="pagination__load-more--button">Load More</button>
+    </section>
+</main>
+<style>
+    :root {
+        --panel: #f9f9f9;
+        --text-color: #000;
+        --link-color: #1a73e8;
+        --spacing: 16px;
+    }
+
+    .content {
+        padding: var(--spacing);
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination {
+        width: 100%;
+        padding: var(--spacing);
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination__load-more--button {
+        background: var(--panel);
+        border: none;
+        border-radius: 8px;
+        padding: calc(var(--spacing) / 2) var(--spacing);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .pagination__load-more--button:hover {
+        background: #e5e5e5;
+    }
+
+    .pagination__load-more--button:focus {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+    }
+</style>
+<footer class="footer">
+  <ul class="footer__links">
+    <li class="footer__item"><a href="#" class="footer__link">About</a></li>
+    <li class="footer__item"><a href="#" class="footer__link">Contact Us</a></li>
+    <li class="footer__item"><a href="#" class="footer__link">Advertising</a></li>
+    <li class="footer__item"><a href="#" class="footer__link">Privacy Policy</a></li>
+    <li class="footer__item"><a href="#" class="footer__link">Terms of Service</a></li>
+  </ul>
+</footer>
+
+<style>
+  :root {
+    --panel: #f9f9f9;
+    --text-color: #333;
+    --link-color: #065fd4;
+  }
+
+  .footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 2rem;
+    background: var(--panel);
+    color: var(--text-color);
+  }
+
+  .footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer__item {
+    text-align: left;
+  }
+
+  .footer__link {
+    display: block;
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .footer__link:hover,
+  .footer__link:focus {
+    opacity: 0.8;
+  }
+
+  .footer__link:active {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 600px) {
+    .footer {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+  }
+</style>
+</body>
+</html>

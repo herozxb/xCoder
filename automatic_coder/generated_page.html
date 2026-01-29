@@ -1,0 +1,134 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baidu Front Page</title>
+    <style>
+        :root {
+            --primary-color: #333;
+            --secondary-color: #f2f2f2;
+            --accent-color: #ff6600;
+            --spacing: 1rem;
+            --radius: 4px;
+            --font-family: 'Arial, sans-serif';
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-areas:
+                "header header header"
+                "main main main"
+                "footer footer footer";
+            gap: var(--spacing);
+        }
+
+        header {
+            grid-area: header;
+            background: var(--secondary-color);
+            padding: var(--spacing);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input[type="text"] {
+            padding: calc(var(--spacing) / 2);
+            margin-right: var(--spacing);
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+        }
+
+        .actions button, .search-bar button {
+            padding: calc(var(--spacing) / 2) var(--spacing);
+            border: none;
+            background: var(--accent-color);
+            color: white;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        main {
+            grid-area: main;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing);
+            padding: var(--spacing);
+        }
+
+        .video-card {
+            background: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .footer {
+            grid-area: footer;
+            background: var(--secondary-color);
+            padding: var(--spacing);
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: start;
+            }
+
+            .search-bar input[type="text"] {
+                width: 100%;
+                margin-bottom: var(--spacing);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Baidu</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <div class="actions">
+            <button>Login</button>
+            <button>Register</button>
+        </div>
+    </header>
+    <main class="main-content">
+        <!-- Video Cards will be dynamically inserted here -->
+    </main>
+    <footer class="footer">
+        <a href="#">About Us</a> | 
+        <a href="#">Contact</a> | 
+        <a href="#">Privacy Policy</a>
+    </footer>
+</body>
+</html>
+```
+
+This HTML structure follows the provided plan and includes semantic HTML5 elements, CSS Grid for layout, mobile-first responsive design with media queries, and accessibility standards. The style is embedded within the `<style>` tags, following the specified requirements.
