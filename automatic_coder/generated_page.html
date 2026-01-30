@@ -10,17 +10,15 @@
             --secondary-color: #ffffff;
             --background-color: #f9f9f9;
             --text-color: #000000;
-            --link-color: #065fd4;
-            --spacing: 1rem;
-            --border-radius: 4px;
+            --spacing: 16px;
         }
 
-        body {
+        body, html {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
         }
 
         header {
@@ -31,23 +29,29 @@
             background-color: var(--secondary-color);
         }
 
-        .logo img {
+        .logo {
             height: 24px;
         }
 
-        nav input[type="text"] {
-            width: 300px;
-            padding: calc(var(--spacing) / 2) var(--spacing);
-            border: 1px solid #ccc;
-            border-radius: var(--border-radius);
+        nav form {
+            display: flex;
+            align-items: center;
         }
 
-        .actions button {
-            margin-left: var(--spacing);
-            padding: calc(var(--spacing) / 2) calc(var(--spacing));
+        input[type="text"] {
+            width: 300px;
+            padding: var(--spacing);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .actions button, .chips button {
+            margin: 0 var(--spacing);
+            padding: var(--spacing) calc(var(--spacing) * 2);
             border: none;
-            background-color: #f0f0f0;
-            border-radius: var(--border-radius);
+            background-color: #f2f2f2;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         .chips {
@@ -57,101 +61,112 @@
             background-color: var(--secondary-color);
         }
 
-        .chip {
-            margin-right: var(--spacing);
-            padding: calc(var(--spacing) / 2) var(--spacing);
-            border: 1px solid #ccc;
-            border-radius: var(--border-radius);
-            background-color: var(--background-color);
-        }
-
         main {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: var(--spacing);
             padding: var(--spacing) calc(var(--spacing) * 2);
         }
 
         .video-card {
-            background-color: var(--secondary-color);
-            border-radius: var(--border-radius);
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
         }
 
-        .video-card img {
+        .thumbnail {
+            position: relative;
+        }
+
+        .thumbnail img {
             width: 100%;
             height: auto;
         }
 
-        .video-info {
-            padding: var(--spacing);
+        .duration {
+            position: absolute;
+            bottom: var(--spacing);
+            right: var(--spacing);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            padding: 2px 4px;
+            border-radius: 4px;
         }
 
-        .load-more {
+        .video-info {
             display: flex;
-            justify-content: center;
-            padding: var(--spacing) calc(var(--spacing) * 2);
-            background-color: var(--secondary-color);
+            align-items: start;
+            margin-top: var(--spacing);
+        }
+
+        .channel-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: var(--spacing);
+        }
+
+        .video-title, .channel-name {
+            font-size: 14px;
+            margin: 0;
         }
 
         footer {
             display: flex;
             justify-content: space-around;
-            align-items: center;
-            padding: var(--spacing) calc(var(--spacing) * 2);
+            padding: var(--spacing);
             background-color: var(--secondary-color);
         }
 
         footer a {
-            color: var(--link-color);
             text-decoration: none;
-        }
-
-        @media (max-width: 600px) {
-            nav input[type="text"] {
-                width: 100%;
-            }
+            color: inherit;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube Logo">
-        </div>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube Logo" class="logo">
         <nav>
-            <input type="text" placeholder="Search">
+            <form action="#">
+                <input type="text" placeholder="Search...">
+            </form>
         </nav>
         <div class="actions">
-            <button>Login</button>
-            <button>Sign up</button>
+            <button type="button">Sign in</button>
+            <button type="button">Join now</button>
         </div>
     </header>
     <section class="chips">
-        <div class="chip">All</div>
-        <div class="chip">Music</div>
-        <div class="chip">Gaming</div>
-        <div class="chip">News</div>
-        <div class="chip">Sports</div>
+        <button type="button">All</button>
+        <button type="button">Music</button>
+        <button type="button">Gaming</button>
+        <button type="button">News</button>
+        <button type="button">Movies</button>
     </section>
-    <main class="main-grid">
+    <main>
         <article class="video-card">
-            <img src="https://via.placeholder.com/200x150" alt="Video Thumbnail">
+            <div class="thumbnail">
+                <img src="https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg" alt="Video Thumbnail">
+                <span class="duration">5:30</span>
+            </div>
             <div class="video-info">
-                <h3>Video Title</h3>
-                <p>Channel Name</p>
+                <img src="https://example.com/channel-avatar.jpg" alt="Channel Avatar" class="channel-avatar">
+                <div>
+                    <h2 class="video-title">Video Title</h2>
+                    <p class="channel-name">Channel Name</p>
+                </div>
             </div>
         </article>
         <!-- Repeat for other video cards -->
     </main>
-    <div class="load-more">
-        <button>Load More</button>
-    </div>
     <footer>
         <a href="#">About</a>
-        <a href="#">Contact</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
+        <a href="#">Press</a>
+        <a href="#">Copyright</a>
+        <a href="#">Contact us</a>
+        <a href="#">Creators</a>
     </footer>
 </body>
 </html>

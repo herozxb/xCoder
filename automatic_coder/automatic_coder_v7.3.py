@@ -18,6 +18,10 @@ PART 5: FOOTER (links)"""
 
     def generate_part_tool(self, plan):
         # Generate HTML based on the simplified plan using the LLM model (ollama)
+        
+        print("==============plan===============")
+        print(plan)
+        
         prompt = f"""
 Generate a complete HTML structure and layout based on the following plan. The HTML should be clean, accessible, and semantic.
 DO NOT use predefined templates. Instead, generate the HTML dynamically based on the given plan:
@@ -86,4 +90,4 @@ OUTPUT FORMAT:
 
 # Run the agent with a goal
 agent = SimpleFrameAgent("deepseek-coder-v2")
-agent.execute("just show me a youtube.com front page with sidebar, make the logo from url of https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg")
+agent.execute("just show me a youtube.com front page with sidebar, make the logo from url of https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg, show me 3 video box, and video with box real video each one, just find the video online")
